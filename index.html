@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nick Smock — IT automation</title>
+<meta name="description" content="Two things I automated as sole IT Person at my company">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+<style>
+  :root{
+    --bg:#0A0E14;
+    --surface:#161B22;
+    --line:#26262E;
+    --text:#E6EDF3;
+    --muted:#8C8C99;
+    --accent:#A855F7;
+    --sans:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);font-size:16px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:660px;margin:0 auto;padding:56px 24px 96px}
+
+  /* ---- masthead ---- */
+  .mark{margin:0 0 40px}
+  .mark img{display:block;width:120px;height:auto;max-width:100%}
+  h1{
+    font-size:clamp(28px,6vw,38px);line-height:1.15;letter-spacing:-.022em;
+    font-weight:700;margin:0 0 14px;
+  }
+  .standfirst{color:var(--muted);font-size:17px;margin:0;max-width:52ch}
+
+  .rule{height:1px;background:var(--line);border:0;margin:48px 0}
+
+  /* ---- cases ---- */
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 10px;
+  }
+  h2{font-size:21px;line-height:1.3;letter-spacing:-.012em;font-weight:600;margin:0 0 20px}
+  .field{display:grid;grid-template-columns:96px 1fr;gap:18px;margin:0 0 16px}
+  .field dt{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);padding-top:5px;
+  }
+  .field dd{margin:0}
+  @media (max-width:560px){
+    .field{grid-template-columns:1fr;gap:4px}
+    .field dt{padding-top:0}
+  }
+
+  /* ---- signature: the reconciliation block ---- */
+  .recon{
+    font-family:var(--mono);font-size:12.5px;line-height:2;
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    padding:18px 20px;margin:26px 0 0;overflow-x:auto;
+  }
+  .recon .head{color:var(--muted);letter-spacing:.1em;font-size:10.5px;text-transform:uppercase}
+  .recon .row{display:grid;grid-template-columns:1fr 34px 1fr;align-items:center;white-space:nowrap}
+  .recon .op{text-align:center;color:var(--muted)}
+  .recon .miss{color:var(--accent)}
+  .recon .miss .op{color:var(--accent)}
+  .recon .gone{color:var(--muted);font-style:italic}
+  .recon .note{
+    color:var(--muted);font-size:11px;line-height:1.6;letter-spacing:.02em;
+    border-top:1px solid var(--line);margin-top:12px;padding-top:12px;white-space:normal;
+  }
+
+  /* ---- close ---- */
+  .close p{max-width:56ch}
+  .contact{font-family:var(--mono);font-size:13.5px;color:var(--muted);margin:0}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+  a:hover{border-bottom-color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+  /* ---- load ---- */
+  .stagger{opacity:0;transform:translateY(8px);animation:rise .5s cubic-bezier(.2,.6,.3,1) forwards}
+  .stagger:nth-child(2){animation-delay:.06s}
+  .stagger:nth-child(3){animation-delay:.12s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .stagger{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <p class="mark"><img src="smock-wordmark-animated.svg" alt="smock"></p>
+
+  <header class="stagger">
+    <h1>Two things I automated<br>because no one else was going to.</h1>
+    <p class="standfirst">I'm Nick Smock, and I'm sole IT person at my company. Both of
+    these came out of the same problem: two lists that nobody was comparing. I built them
+    using Claude Code.</p>
+  </header>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <p class="eyebrow">Access control</p>
+    <h2>Finding the people who left without telling IT</h2>
+
+    <dl class="field">
+      <dt>Problem</dt>
+      <dd>As the only IT person, I find out someone left when somebody tells me. That
+      notification often didn't arrive, so accounts stayed active after the person was
+      gone. I couldn't fix the handoff, so I stopped depending on it.</dd>
+    </dl>
+    <dl class="field">
+      <dt>Built</dt>
+      <dd>A scheduled PowerShell job that pulls the current directory user list, compares
+      it against the employee roster from HR, and flags accounts that don't reconcile for
+      review and disablement.</dd>
+    </dl>
+    <dl class="field">
+      <dt>Result</dt>
+      <dd>Departures are detected from HR's own records instead of a handoff that may never
+      happen. The first run surfaced active accounts belonging to people who no longer
+      worked there.</dd>
+    </dl>
+
+    <div class="recon" aria-label="Illustration of directory accounts reconciled against the HR roster">
+      <div class="row head"><span>Directory</span><span></span><span>HR roster</span></div>
+      <div class="row"><span>j.okafor</span><span class="op">=</span><span>j.okafor</span></div>
+      <div class="row"><span>m.castellanos</span><span class="op">=</span><span>m.castellanos</span></div>
+      <div class="row miss"><span>r.whitfield</span><span class="op">!</span><span class="gone">no match</span></div>
+      <div class="row"><span>t.nguyen</span><span class="op">=</span><span>t.nguyen</span></div>
+      <p class="note">Anything without a match is a person who left and an account that
+      didn't. Illustrative names.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <p class="eyebrow">Security awareness</p>
+    <h2>One report instead of two spreadsheets</h2>
+
+    <dl class="field">
+      <dt>Problem</dt>
+      <dd>Training completion and phishing simulation results come out of our security
+      awareness platform as separate exports. The people who matter most are the ones in both, who failed a
+      simulation and skipped the training, and finding them meant cross-referencing by
+      hand every week.</dd>
+    </dl>
+    <dl class="field">
+      <dt>Built</dt>
+      <dd>A parser that reads both exports and produces one readable report, sorted so the
+      highest-risk users are at the top.</dd>
+    </dl>
+    <dl class="field">
+      <dt>Result</dt>
+      <dd>About an hour a week back, so roughly fifty hours a year. The bigger change is
+      that the report gets read now, because it's one page instead of two spreadsheets.</dd>
+    </dl>
+  </section>
+
+  <hr class="rule">
+
+  <section class="close">
+    <p class="eyebrow">How I work with it</p>
+    <p>Claude writes most of the PowerShell I deploy. I read it, test it, and stage it
+    before it touches anything in production, which matters more than usual when the script
+    disables accounts for a living. I also use it to build internal tools, write end-user
+    runbooks, and produce staff training, including a company-wide briefing on AI data
+    privacy for a workforce that is not especially technical. That last part is most of the
+    job. Automation is easy compared to getting people to use it.</p>
+    <p class="contact">nick@smock.me &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/nicksmock">linkedin.com/in/nicksmock</a></p>
+  </section>
+
+</main>
+</body>
+</html>
