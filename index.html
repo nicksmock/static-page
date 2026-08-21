@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nick Smock — IT automation</title>
-<meta name="description" content="Two things I automated as sole IT Person at my company">
+<title>Nick Smock, sole IT</title>
+<meta name="description" content="Nick Smock. Sole IT for a 120-person, single-site hospitality operation that runs 364 days a year. Identity, endpoints, POS, and automation, owned end to end.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
 
   .rule{height:1px;background:var(--line);border:0;margin:48px 0}
 
-  /* ---- cases ---- */
+  /* ---- sections ---- */
   .eyebrow{
     font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--accent);margin:0 0 10px;
@@ -57,6 +57,27 @@
     .field{grid-template-columns:1fr;gap:4px}
     .field dt{padding-top:0}
   }
+
+  /* ---- scope grid ---- */
+  .scope{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    margin:26px 0 0;overflow:hidden;
+  }
+  .scope > div{padding:14px 18px;border-top:1px solid var(--line)}
+  .scope > div:nth-child(-n+2){border-top:0}
+  .scope > div:nth-child(odd){border-right:1px solid var(--line)}
+  .scope dt{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 2px;
+  }
+  .scope dd{margin:0;font-family:var(--mono);font-size:13.5px}
+  @media (max-width:480px){
+    .scope{grid-template-columns:1fr}
+    .scope > div:nth-child(odd){border-right:0}
+    .scope > div:nth-child(2){border-top:1px solid var(--line)}
+  }
+  .scopenote{color:var(--muted);font-size:13px;margin:12px 0 0}
 
   /* ---- signature: the reconciliation block ---- */
   .recon{
@@ -84,8 +105,10 @@
 
   /* ---- load ---- */
   .stagger{opacity:0;transform:translateY(8px);animation:rise .5s cubic-bezier(.2,.6,.3,1) forwards}
-  .stagger:nth-child(2){animation-delay:.06s}
-  .stagger:nth-child(3){animation-delay:.12s}
+  .stagger:nth-of-type(2){animation-delay:.06s}
+  .stagger:nth-of-type(3){animation-delay:.12s}
+  .stagger:nth-of-type(4){animation-delay:.18s}
+  .stagger:nth-of-type(5){animation-delay:.24s}
   @keyframes rise{to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){
     .stagger{animation:none;opacity:1;transform:none}
@@ -98,35 +121,56 @@
   <p class="mark"><img src="smock-wordmark-animated.svg" alt="smock"></p>
 
   <header class="stagger">
-    <h1>Two things I automated<br>because no one else was going to.</h1>
-    <p class="standfirst">I'm Nick Smock, and I'm sole IT person at my company. Both of
-    these came out of the same problem: two lists that nobody was comparing. I built them
-    using Claude Code.</p>
+    <h1>Sole IT for a place with<br>no maintenance window.</h1>
+    <p class="standfirst">I'm Nick Smock. I run the entire IT function for a single-site
+    hospitality operation, about 120 users across dining, retail, and events, open 364 days
+    a year. Ten years in technology support, seven of them owning an IT function alone.</p>
   </header>
 
   <hr class="rule">
 
   <section class="stagger">
+    <p class="eyebrow">Scope</p>
+    <h2>The environment, by the numbers</h2>
+    <dl class="scope">
+      <div><dt>Users supported</dt><dd>~120</dd></div>
+      <div><dt>Sole IT since</dt><dd>2019</dd></div>
+      <div><dt>Managed endpoints</dt><dd>~96</dd></div>
+      <div><dt>Hosts / VMs</dt><dd>2 / ~16</dd></div>
+      <div><dt>Wireless APs</dt><dd>~40</dd></div>
+      <div><dt>POS terminals</dt><dd>~60, 3 platforms</dd></div>
+      <div><dt>Mailboxes</dt><dd>~80, hybrid Exchange</dd></div>
+      <div><dt>Operating days / year</dt><dd>364</dd></div>
+    </dl>
+    <p class="scopenote">Owned end to end: ticketing, RMM, provisioning from directory
+    account to POS login, patching, license renewals, runbooks, and the security awareness
+    program. 30 to 40 tickets a month, though in a restaurant most support never becomes a
+    ticket. It's someone catching you in a hallway during dinner service.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
     <p class="eyebrow">Access control</p>
-    <h2>Finding the people who left without telling IT</h2>
+    <h2>Finding the accounts that outlast the people</h2>
 
     <dl class="field">
       <dt>Problem</dt>
-      <dd>As the only IT person, I find out someone left when somebody tells me. That
-      notification often didn't arrive, so accounts stayed active after the person was
-      gone. I couldn't fix the handoff, so I stopped depending on it.</dd>
+      <dd>Nothing systematically told the directory when someone left, so it drifted from
+      the HR record of truth. Accounts could stay active and licensed after a person was
+      gone. I stopped treating manual notification as a control and built one that
+      doesn't need it.</dd>
     </dl>
     <dl class="field">
       <dt>Built</dt>
-      <dd>A scheduled PowerShell job that pulls the current directory user list, compares
-      it against the employee roster from HR, and flags accounts that don't reconcile for
-      review and disablement.</dd>
+      <dd>PowerShell exports the current Active Directory user list. A Python script
+      compares it against the monthly HR roster and reports every account with no match
+      for review and disablement. Runs monthly as a standing access review.</dd>
     </dl>
     <dl class="field">
       <dt>Result</dt>
-      <dd>Departures are detected from HR's own records instead of a handoff that may never
-      happen. The first run surfaced active accounts belonging to people who no longer
-      worked there.</dd>
+      <dd>Departures are detected from HR's own records instead of a handoff that has to
+      be remembered. Stops Microsoft 365 license spend on people who no longer work there.</dd>
     </dl>
 
     <div class="recon" aria-label="Illustration of directory accounts reconciled against the HR roster">
@@ -148,33 +192,50 @@
 
     <dl class="field">
       <dt>Problem</dt>
-      <dd>Training completion and phishing simulation results come out of our security
-      awareness platform as separate exports. The people who matter most are the ones in both, who failed a
-      simulation and skipped the training, and finding them meant cross-referencing by
-      hand every week.</dd>
+      <dd>I proposed the phishing simulation and training program, picked the platform,
+      and run it solo across 366 accounts. Training completion and simulation results
+      come out of it as separate exports. The people who matter most are the ones in
+      both, who failed a simulation and skipped the training, and finding them meant
+      cross-referencing by hand every week.</dd>
     </dl>
     <dl class="field">
       <dt>Built</dt>
-      <dd>A parser that reads both exports and produces one readable report, sorted so the
+      <dd>A parser that reads both exports and produces one weekly report, ranked so the
       highest-risk users are at the top.</dd>
     </dl>
     <dl class="field">
       <dt>Result</dt>
-      <dd>About an hour a week back, so roughly fifty hours a year. The bigger change is
-      that the report gets read now, because it's one page instead of two spreadsheets.</dd>
+      <dd>About an hour a week back, roughly fifty hours a year. Failed phishing
+      simulations have more than halved since the program's first month.</dd>
     </dl>
   </section>
 
   <hr class="rule">
 
+  <section class="stagger">
+    <p class="eyebrow">Handled</p>
+    <h2>The switching loop with no logs to read</h2>
+    <p>A POS segment of about 26 terminals and their payment devices went down during
+    service. The segment ran on unmanaged switches, so there were no logs and no port
+    statistics to query. I isolated it by walking three floors and pulling uplinks switch
+    by switch, then port by port on the suspect switch, until the segment recovered. The
+    cause was a VoIP phone cabled backwards through its PC pass-through port, a switching
+    loop on a segment with no spanning tree to break it. Resolved without escalating.
+    The follow-up was cabling training for staff.</p>
+  </section>
+
+  <hr class="rule">
+
   <section class="close">
-    <p class="eyebrow">How I work with it</p>
-    <p>Claude writes most of the PowerShell I deploy. I read it, test it, and stage it
-    before it touches anything in production, which matters more than usual when the script
-    disables accounts for a living. I also use it to build internal tools, write end-user
-    runbooks, and produce staff training, including a company-wide briefing on AI data
-    privacy for a workforce that is not especially technical. That last part is most of the
-    job. Automation is easy compared to getting people to use it.</p>
+    <p class="eyebrow">How I work</p>
+    <p>Somewhere between a dozen and twenty scripts I've written run in production across
+    the RMM tenant and scheduled jobs, in PowerShell and Python. I build much of that with
+    Claude Code, and I read, test, and stage everything before it touches production, which
+    matters more than usual when a script disables accounts for a living. I write end-user
+    runbooks, quarterly security training, and a company-wide briefing on AI data privacy
+    for a workforce that is not especially technical. I report to a non-technical
+    executive, and most of the job is translating technical constraints into terms that
+    let people work confidently. Automation is easy compared to that.</p>
     <p class="contact">nick@smock.me &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/nicksmock">linkedin.com/in/nicksmock</a></p>
   </section>
 
