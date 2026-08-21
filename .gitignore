@@ -1,2 +1,5 @@
 # Brand asset source folder — keep local only
 smock-brand-assets/
+
+# PRD and supporting documentation — keep local only
+files/
