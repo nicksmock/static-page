@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nick Smock, sole IT</title>
 <meta name="description" content="Nick Smock. Sole IT for a 120-person, single-site hospitality operation that runs 364 days a year. Identity, endpoints, POS, and automation, owned end to end.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smock.dev/">
+<meta property="og:title" content="Nick Smock, sole IT">
+<meta property="og:description" content="Sole IT for a 120-person hospitality operation that runs 364 days a year. Identity, endpoints, POS, and automation, owned end to end.">
+<meta property="og:image" content="https://smock.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nick Smock, sole IT">
+<meta name="twitter:description" content="Sole IT for a 120-person hospitality operation that runs 364 days a year. Identity, endpoints, POS, and automation, owned end to end.">
+<meta name="twitter:image" content="https://smock.dev/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -37,6 +48,8 @@
     font-size:clamp(28px,6vw,38px);line-height:1.15;letter-spacing:-.022em;
     font-weight:700;margin:0 0 14px;
   }
+  h1 br{display:none}
+  @media (min-width:520px){h1 br{display:inline}}
   .standfirst{color:var(--muted);font-size:17px;margin:0;max-width:52ch}
 
   .rule{height:1px;background:var(--line);border:0;margin:48px 0}
@@ -193,17 +206,17 @@
 
     <dl class="field">
       <dt>Problem</dt>
-      <dd>Training completion and phishing simulation results come out of the security
-      awareness platform as separate exports. The people who matter most are the ones in
-      both, who failed a simulation and skipped the training, and finding them meant
-      cross-referencing by hand every week.</dd>
+      <dd>I proposed the phishing simulation and training program, picked the platform,
+      and run it solo across 366 accounts company-wide, past the 120 users I support
+      directly. Training completion and simulation results come out of it as separate
+      exports. The people who matter most are the ones in both, who failed a simulation
+      and skipped the training, and finding them meant cross-referencing by hand every
+      week.</dd>
     </dl>
     <dl class="field">
       <dt>Built</dt>
-      <dd>I proposed the program, picked the platform, and run it solo across 366
-      accounts company-wide, past the 120 users I support directly. The parser reads
-      both exports and produces one weekly report, ranked so the highest-risk users
-      are at the top.</dd>
+      <dd>A parser that reads both exports and produces one weekly report, ranked so
+      the highest-risk users are at the top.</dd>
     </dl>
     <dl class="field">
       <dt>Result</dt>
