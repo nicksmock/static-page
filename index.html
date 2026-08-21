@@ -42,10 +42,6 @@
   .rule{height:1px;background:var(--line);border:0;margin:48px 0}
 
   /* ---- sections ---- */
-  .eyebrow{
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent);margin:0 0 10px;
-  }
   h2{font-size:21px;line-height:1.3;letter-spacing:-.012em;font-weight:600;margin:0 0 20px}
   .field{display:grid;grid-template-columns:96px 1fr;gap:18px;margin:0 0 16px}
   .field dt{
@@ -58,26 +54,16 @@
     .field dt{padding-top:0}
   }
 
-  /* ---- scope grid ---- */
-  .scope{
-    display:grid;grid-template-columns:1fr 1fr;gap:0;
-    background:var(--surface);border:1px solid var(--line);border-radius:6px;
-    margin:26px 0 0;overflow:hidden;
+  /* ---- scope list ---- */
+  .scope{font-family:var(--mono);margin:26px 0 0}
+  .scope > div{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:9px 0;border-top:1px solid var(--line);
   }
-  .scope > div{padding:14px 18px;border-top:1px solid var(--line)}
-  .scope > div:nth-child(-n+2){border-top:0}
-  .scope > div:nth-child(odd){border-right:1px solid var(--line)}
-  .scope dt{
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--muted);margin:0 0 2px;
-  }
-  .scope dd{margin:0;font-family:var(--mono);font-size:13.5px}
-  @media (max-width:480px){
-    .scope{grid-template-columns:1fr}
-    .scope > div:nth-child(odd){border-right:0}
-    .scope > div:nth-child(2){border-top:1px solid var(--line)}
-  }
-  .scopenote{color:var(--muted);font-size:13px;margin:12px 0 0}
+  .scope > div:last-child{border-bottom:1px solid var(--line)}
+  .scope dt{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .scope dd{margin:0;font-size:13.5px;text-align:right}
+  .scopenote{color:var(--muted);font-size:13px;margin:14px 0 0}
 
   /* ---- signature: the reconciliation block ---- */
   .recon{
@@ -98,7 +84,10 @@
 
   /* ---- close ---- */
   .close p{max-width:56ch}
-  .contact{font-family:var(--mono);font-size:13.5px;color:var(--muted);margin:0}
+  .contact{
+    font-family:var(--mono);font-size:16px;margin:0;
+    padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
   a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
   a:hover{border-bottom-color:var(--accent)}
   a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -123,19 +112,20 @@
   <header class="stagger">
     <h1>Sole IT for a place with<br>no maintenance window.</h1>
     <p class="standfirst">I'm Nick Smock. I run the entire IT function for a single-site
-    hospitality operation, about 120 users across dining, retail, and events, open 364 days
-    a year. Ten years in technology support, seven of them owning an IT function alone.</p>
+    hospitality operation, about 120 users across dining rooms, retail shops, and
+    conference space, open 364 days a year. Ten years in technology support, seven of
+    them owning an IT function alone.</p>
   </header>
 
   <hr class="rule">
 
   <section class="stagger">
-    <p class="eyebrow">Scope</p>
     <h2>The environment, by the numbers</h2>
     <dl class="scope">
       <div><dt>Users supported</dt><dd>~120</dd></div>
       <div><dt>Sole IT since</dt><dd>2019</dd></div>
-      <div><dt>Managed endpoints</dt><dd>~96</dd></div>
+      <div><dt>Windows endpoints</dt><dd>~70</dd></div>
+      <div><dt>iOS and iPadOS devices</dt><dd>~26</dd></div>
       <div><dt>Hosts / VMs</dt><dd>2 / ~16</dd></div>
       <div><dt>Wireless APs</dt><dd>~40</dd></div>
       <div><dt>POS terminals</dt><dd>~60, 3 platforms</dd></div>
@@ -151,7 +141,6 @@
   <hr class="rule">
 
   <section class="stagger">
-    <p class="eyebrow">Access control</p>
     <h2>Finding the accounts that outlast the people</h2>
 
     <dl class="field">
@@ -187,21 +176,34 @@
   <hr class="rule">
 
   <section class="stagger">
-    <p class="eyebrow">Security awareness</p>
+    <h2>The switching loop with no logs to read</h2>
+    <p>A POS segment of about 26 terminals and their payment devices went down. The
+    segment ran on unmanaged switches, so there were no logs and no port statistics to
+    query. I isolated it by walking three floors and pulling uplinks switch by switch,
+    then port by port on the suspect switch, until the segment recovered. The cause was
+    a VoIP phone cabled backwards through its PC pass-through port, a switching loop on
+    a segment with no spanning tree to break it. Resolved without escalating. The
+    follow-up was cabling training for staff.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
     <h2>One report instead of two spreadsheets</h2>
 
     <dl class="field">
       <dt>Problem</dt>
-      <dd>I proposed the phishing simulation and training program, picked the platform,
-      and run it solo across 366 accounts. Training completion and simulation results
-      come out of it as separate exports. The people who matter most are the ones in
+      <dd>Training completion and phishing simulation results come out of the security
+      awareness platform as separate exports. The people who matter most are the ones in
       both, who failed a simulation and skipped the training, and finding them meant
       cross-referencing by hand every week.</dd>
     </dl>
     <dl class="field">
       <dt>Built</dt>
-      <dd>A parser that reads both exports and produces one weekly report, ranked so the
-      highest-risk users are at the top.</dd>
+      <dd>I proposed the program, picked the platform, and run it solo across 366
+      accounts company-wide, past the 120 users I support directly. The parser reads
+      both exports and produces one weekly report, ranked so the highest-risk users
+      are at the top.</dd>
     </dl>
     <dl class="field">
       <dt>Result</dt>
@@ -212,31 +214,17 @@
 
   <hr class="rule">
 
-  <section class="stagger">
-    <p class="eyebrow">Handled</p>
-    <h2>The switching loop with no logs to read</h2>
-    <p>A POS segment of about 26 terminals and their payment devices went down during
-    service. The segment ran on unmanaged switches, so there were no logs and no port
-    statistics to query. I isolated it by walking three floors and pulling uplinks switch
-    by switch, then port by port on the suspect switch, until the segment recovered. The
-    cause was a VoIP phone cabled backwards through its PC pass-through port, a switching
-    loop on a segment with no spanning tree to break it. Resolved without escalating.
-    The follow-up was cabling training for staff.</p>
-  </section>
-
-  <hr class="rule">
-
   <section class="close">
-    <p class="eyebrow">How I work</p>
-    <p>Somewhere between a dozen and twenty scripts I've written run in production across
-    the RMM tenant and scheduled jobs, in PowerShell and Python. I build much of that with
-    Claude Code, and I read, test, and stage everything before it touches production, which
-    matters more than usual when a script disables accounts for a living. I write end-user
-    runbooks, quarterly security training, and a company-wide briefing on AI data privacy
-    for a workforce that is not especially technical. I report to a non-technical
-    executive, and most of the job is translating technical constraints into terms that
-    let people work confidently. Automation is easy compared to that.</p>
-    <p class="contact">nick@smock.me &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/nicksmock">linkedin.com/in/nicksmock</a></p>
+    <h2>How I work</h2>
+    <p>The scripts I write run in production across the RMM tenant and scheduled jobs,
+    in PowerShell and Python. I build much of that with Claude Code, and I read, test,
+    and stage everything before it touches production, which matters more than usual
+    when a script disables accounts for a living. I write end-user runbooks, quarterly
+    security training, and a company-wide briefing on AI data privacy for a workforce
+    that is not especially technical. I report to a non-technical executive, and most
+    of the job is translating technical constraints into terms that let people work
+    confidently. Automation is easy compared to that.</p>
+    <p class="contact"><a href="mailto:nick@smock.me">nick@smock.me</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/nicksmock">linkedin.com/in/nicksmock</a></p>
   </section>
 
 </main>
