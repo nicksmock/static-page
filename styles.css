@@ -28,6 +28,15 @@
   @media (min-width:520px){h1 br{display:inline}}
   .standfirst{color:var(--muted);font-size:17px;margin:0;max-width:52ch}
 
+  /* ---- nav ---- */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 40px}
+  .top .mark{margin:0}
+  .top .mark a{border:0;display:block}
+  .nav{font-family:var(--mono);font-size:12.5px;display:flex;gap:16px}
+  .nav a{color:var(--muted)}
+  .nav a:hover,.nav a[aria-current="page"]{color:var(--accent)}
+  .quiet{color:var(--muted);font-family:var(--mono);font-size:13px;margin:0 0 48px}
+
   .rule{height:1px;background:var(--line);border:0;margin:48px 0}
 
   /* ---- sections ---- */
@@ -74,7 +83,7 @@
   /* ---- close ---- */
   .close p{max-width:56ch}
   .contact{
-    font-family:var(--mono);font-size:16px;margin:0;
+    font-family:var(--mono);font-size:16px;margin:0;max-width:56ch;
     padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   }
   a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
