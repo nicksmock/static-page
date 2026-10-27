@@ -40,18 +40,36 @@
 
   <section class="stagger">
     <h2>Auditing the lab before documenting it</h2>
-    <p>The lab runs my media and book libraries (Jellyfin, Komga, Calibre-Web) and filtered
-    DNS for the house: about 20 containers on one Unraid server, a Raspberry Pi, and a backup
-    host. In October 2026 I audited its four systems, the Unraid server, the UniFi network,
-    the DNS resolver, and the Cloudflare zone and tunnel, one at a time. Collection was
-    read-only, with a written list of forbidden commands per system and read-only API
-    credentials where the system offered them. Nothing was recorded as fact until it was
-    observed on the live system. Every finding carries a severity and a status of open,
-    fixed, or accepted, is never deleted, and is not marked fixed on my word: the data is
-    re-collected and the earlier output kept next to the new. The output is current-state
-    docs for each system and nine runbooks covering disk, flash, restore, DNS, network, and
-    Cloudflare tasks.</p>
+    <p>The lab is one Unraid server, a Raspberry Pi, and a backup host behind a UniFi gateway,
+    running my media and book libraries and filtered DNS for the house. In October 2026 I
+    audited its four systems, the Unraid server, the UniFi network, the DNS resolver, and
+    the Cloudflare zone and tunnel, one at a time. Collection was read-only, with a written
+    list of forbidden commands per system and read-only API credentials where the system
+    offered them. Nothing was recorded as fact until it was observed on the live system.
+    Every finding carries a severity and a status of open, fixed, or accepted, is never
+    deleted, and is not marked fixed on my word: the data is re-collected and the earlier
+    output kept next to the new. The output is current-state docs for each system and nine
+    runbooks covering disk, flash, restore, DNS, network, and Cloudflare tasks.</p>
     <p class="scopenote">Home lab · Unraid, UniFi, AdGuard Home, Cloudflare</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <h2>poseidon, the Unraid server</h2>
+    <p>The main server: an i7-4790K, 16 GB of RAM, and a Quadro P2000 passed through to
+    Jellyfin for transcoding. The array is four 10 TB disks with dual parity, so any two can
+    fail without data loss, checked by a non-correcting parity check on the first Sunday of
+    each month. A mirrored pair of 1 TB SSDs holds container config and databases. About 20
+    containers run the media and book libraries (Jellyfin, Komga, Calibre-Web) and the tools
+    that manage them, with media and downloads on one share under one mount so imports are
+    hardlinks or atomic moves instead of copies. Nothing is published unless it has an
+    explicit Traefik route, and the web UI and SSH are bound to the LAN address only, keys
+    only. Five scheduled scripts check the array, containers, DNS, disk temperatures, and
+    system resources and post to Discord; the array and DNS checks keep state, so a problem
+    posts once and reports again when it clears. Container config is archived daily at 03:00
+    with each container stopped while it is copied, then pulled by kronos.</p>
+    <p class="scopenote">Home lab · Unraid, Docker, btrfs, Traefik, Discord alerts</p>
   </section>
 
   <hr class="rule">
@@ -96,7 +114,7 @@
     schedule are data; the script lays them out, embeds the logos, computes the server,
     container, and network counts, and writes a self-contained SVG. Updating the diagram
     means editing data, not drawing.</p>
-    <p class="figure"><a href="/projects/homelab.png"><img src="/projects/homelab-thumb.png" width="660" height="829" alt="Home lab diagram: gateway, five VLANs, three hosts with their services, data paths, and daily schedule."></a></p>
+    <p class="figure"><a href="/projects/homelab.svg"><img src="/projects/homelab-thumb.png" width="660" height="829" alt="Home lab diagram: gateway, five VLANs, three hosts with their services, data paths, and daily schedule."></a></p>
     <p class="scopenote">Home lab · Python, TOML, SVG</p>
   </section>
 
