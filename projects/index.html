@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Projects · Nick Smock</title>
-<meta name="description" content="Projects by Nick Smock.">
-<!-- Remove noindex once real content is published -->
-<meta name="robots" content="noindex">
+<meta name="description" content="Home lab projects by Nick Smock: audit and runbooks, backup host, network and DNS, diagram generator.">
 <link rel="canonical" href="https://smock.dev/projects/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +12,11 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 <link rel="stylesheet" href="/styles.css">
+<style>
+  .figure{margin:20px 0 0}
+  .figure a{border:0;display:block}
+  .figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px}
+</style>
 </head>
 <body>
 <main class="wrap">
@@ -29,12 +32,78 @@
 
   <header class="stagger">
     <h1>Projects</h1>
+    <p class="standfirst">Home lab work, built and run on my own time. It shows interest and
+    range, not work experience, and I don't count it as that.</p>
   </header>
 
   <hr class="rule">
 
   <section class="stagger">
-    <p class="quiet">First entries are being written up.</p>
+    <h2>Auditing the lab before documenting it</h2>
+    <p>The lab runs my media and book libraries (Jellyfin, Komga, Calibre-Web) and filtered
+    DNS for the house: about 20 containers on one Unraid server, a Raspberry Pi, and a backup
+    host. In October 2026 I audited its four systems, the Unraid server, the UniFi network,
+    the DNS resolver, and the Cloudflare zone and tunnel, one at a time. Collection was
+    read-only, with a written list of forbidden commands per system and read-only API
+    credentials where the system offered them. Nothing was recorded as fact until it was
+    observed on the live system. Every finding carries a severity and a status of open,
+    fixed, or accepted, is never deleted, and is not marked fixed on my word: the data is
+    re-collected and the earlier output kept next to the new. The output is current-state
+    docs for each system and nine runbooks covering disk, flash, restore, DNS, network, and
+    Cloudflare tasks.</p>
+    <p class="scopenote">Home lab · Unraid, UniFi, AdGuard Home, Cloudflare</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <h2>kronos, the backup host</h2>
+    <p>A Lenovo ThinkCentre running Debian 13 with a ZFS mirror of two SSDs. The first build
+    used reused hard drives that threw I/O errors; I replaced them with the SSDs. Every night
+    it pulls the Unraid server's container backups and a copy of its flash drive over SSH,
+    keeps 14 daily, 8 weekly, and 6 monthly snapshots with sanoid, then sends an encrypted,
+    deduplicated copy to Backblaze B2 with restic. Only kronos holds a key; the server it
+    backs up has no credential for it, so taking over the server does not reach the backups.
+    Three copies on three kinds of storage: the Unraid array, the ZFS mirror, and object
+    storage. Job failures, ZFS events, and SMART problems alert to Discord. Only SSH listens,
+    keys only, no root login.</p>
+    <p class="scopenote">Home lab · Debian 13, ZFS, sanoid, restic, Backblaze B2</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <h2>Network and DNS</h2>
+    <p>A UniFi gateway, PoE switch, and three access points with five VLANs (management,
+    trusted, services, IoT, guest) under a zone-based firewall. No port forwards and UPnP
+    off; the only way in is a Cloudflare Tunnel the server opens outbound, with Traefik
+    routing by hostname and CrowdSec behind it. Guest and IoT are isolated from the internal
+    networks, and intrusion prevention runs in block mode on every VLAN. DNS is two AdGuard
+    Home resolvers, a Raspberry Pi as primary and a container replica synced from it every
+    15 minutes, handed out by DHCP on every network with no public fallback. The primary
+    serves DNS over TLS, QUIC, and HTTPS with a Let's Encrypt certificate that acme.sh renews
+    through a DNS-01 challenge on a Cloudflare token scoped to that one zone. Upstreams are
+    Quad9 and Cloudflare over DoH with DNSSEC on.</p>
+    <p class="scopenote">Home lab · UniFi, Cloudflare Tunnel, Traefik, CrowdSec, AdGuard Home, acme.sh</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <h2>The diagram, generated from data</h2>
+    <p>The lab diagram is built from a TOML file by a Python script with no dependencies
+    beyond the standard library. Hosts, containers, networks, data paths, and the daily
+    schedule are data; the script lays them out, embeds the logos, computes the server,
+    container, and network counts, and writes a self-contained SVG. Updating the diagram
+    means editing data, not drawing.</p>
+    <p class="figure"><a href="/projects/homelab.png"><img src="/projects/homelab-thumb.png" width="660" height="829" alt="Home lab diagram: gateway, five VLANs, three hosts with their services, data paths, and daily schedule."></a></p>
+    <p class="scopenote">Home lab · Python, TOML, SVG</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="stagger">
+    <p class="quiet">Not shown: a five-node Proxmox VE cluster, boxed up after a move and not currently in service.</p>
   </section>
 
   <footer>
